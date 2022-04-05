@@ -3,7 +3,7 @@ import Data.List
 
 main :: IO ()
 main = do
-    inp <- readFile "/mnt/Files/Dev/Haskell/adventOfCode/input.txt"
+    inp <- readFile "/mnt/Files/Dev/Haskell/adventOfCode/2021/input.txt"
     let rows = reverse $ transpose $ lines inp
     print $ calculateConsumption rows 0 0 0
 
@@ -18,6 +18,6 @@ calculateConsumption :: [String] -> Int -> Int -> Int -> Int
 calculateConsumption (x:xs) i gamma epsilon = let (bit, notBit) = do 
                                                     let b = mostFreq x (0, 0) 
                                                     (fromEnum b, fromEnum $ not b)
-                                              in calculateConsumption xs (i+1) (gamma + bit * (2 ^ i)) (epsilon + notBit * (2 ^ i))
+                                              in calculateConsumption xs (i+1) (gamma + bit * 2^i) (epsilon + notBit * 2^i)
 calculateConsumption _ _ gamma epsilon = gamma * epsilon
                                                 
