@@ -1,6 +1,5 @@
 module Main where
 import Data.List
-import Data.Bits (complement)
 
 main :: IO ()
 main = do
@@ -16,10 +15,9 @@ mostFreq _ (zero, one)
  | otherwise = True
 
 calculateConsumption :: [String] -> Int -> Int -> Int -> Int
-calculateConsumption (x:xs) i gamma epsilon = do
-    let (bit, notBit) = do
-        let b =  mostFreq x (0, 0)
-        (fromEnum b, fromEnum $ not b)
-    calculateConsumption xs (i+1) (gamma + bit * (2 ^ i)) (epsilon + notBit * (2 ^ i))
+calculateConsumption (x:xs) i gamma epsilon = let (bit, notBit) = do 
+                                                    let b = mostFreq x (0, 0) 
+                                                    (fromEnum b, fromEnum $ not b)
+                                              in calculateConsumption xs (i+1) (gamma + bit * (2 ^ i)) (epsilon + notBit * (2 ^ i))
 calculateConsumption _ _ gamma epsilon = gamma * epsilon
                                                 
